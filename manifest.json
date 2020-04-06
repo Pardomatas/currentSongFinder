@@ -2,7 +2,7 @@
     "name" : "Find Current Song",
     "version" : "1.0",
     "description" : "Finds currently playing song/video and creates a text file with the song title for twitch users to use with OBS",
-    "permissions" : ["storage", "declarativeContent", "activeTab"],
+    "permissions" : ["storage", "downloads", "activeTab"],
     "icons": {
         "16": "images/get_started16.png",
         "32": "images/get_started32.png",
@@ -11,9 +11,14 @@
     },
     "content_scripts" : [
         {
-            "matches" : ["https://*.youtube.com/*"],
-            "js" : ["findTitle.js"]
+            "matches" : ["https://*.youtube.com/watch*"],
+            "js" : ["findTitle.js"],
+            "run_at" : "document_end"
         }
     ],
+    "background": {
+		"scripts": ["overwrite.js"],
+		"persistent": false
+	},
     "manifest_version" : 2
 }

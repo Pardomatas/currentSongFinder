@@ -1,4 +1,4 @@
-let checkExist = setInterval(function() {
+function getTitle() {
     let titleElement = document.getElementsByTagName("title")[0].textContent;
     if (titleElement != "YouTube") {
 
@@ -6,35 +6,30 @@ let checkExist = setInterval(function() {
 
         console.log(title);
 
-        console.save(title, "songTitle");
-
-        clearInterval(checkExist);
+        console.save(title);
     }
- }, 100);
+}
 
- (function(console){
+setTimeout(getTitle, 1000);
 
-    console.save = function(data, filename){
+(function(console) {
 
-        if(!data) {
-            console.error('Console.save: No data')
-            return;
+    console.save = function(data) {
+
+        let filename = 'songTitle.txt';
+
+        if(typeof data === "object") {
+            data = JSON.stringify(data, undefined, 4);
         }
 
-        if(!filename) filename = 'songTitle.txt'
+        let blob = new Blob([data], {type: 'text/plain'}),
+            event = document.createEvent('MouseEvents'),
+            aTag = document.createElement('a');
 
-        if(typeof data === "object"){
-            data = JSON.stringify(data, undefined, 4)
-        }
-
-        var blob = new Blob([data], {type: 'text/plain'}),
-            e    = document.createEvent('MouseEvents'),
-            a    = document.createElement('a')
-
-        a.download = filename
-        a.href = window.URL.createObjectURL(blob)
-        a.dataset.downloadurl =  ['text/plain', a.download, a.href].join(':')
-        e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
-        a.dispatchEvent(e)
+        aTag.download = filename;
+        aTag.href = window.URL.createObjectURL(blob);
+        aTag.dataset.downloadurl =  ['text/plain', aTag.download, aTag.href].join(':');
+        event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        aTag.dispatchEvent(event);
     }
 })(console)

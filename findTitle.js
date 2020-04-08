@@ -7,6 +7,7 @@ function getTitle() {
         console.log(title);
 
         console.save(title);
+        
     }
 }
 

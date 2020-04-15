@@ -11,7 +11,7 @@ function getTitle() {
     }
 }
 
-setTimeout(getTitle, 1000);
+setTimeout(getTitle, 2000);
 
 (function(console) {
 

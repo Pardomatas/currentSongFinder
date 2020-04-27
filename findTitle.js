@@ -1,14 +1,13 @@
 function getTitle() {
-    let titleElement = document.getElementsByTagName("title")[0].textContent;
-    if (titleElement != "YouTube") {
+    var targetNode = document.querySelector("h1.title.style-scope.ytd-video-primary-info-renderer");
 
-        let title = titleElement.substring(0, titleElement.length - 9);
-
-        console.log(title);
-
-        console.save(title);
-        
+    if (!targetNode) {
+        window.setTimeout(getTitle, 500);
+        return;
     }
+
+    console.log(targetNode.innerText);
+    console.save(targetNode.innerText);
 }
 
 setTimeout(getTitle, 2000);

@@ -19,6 +19,3 @@ chrome.downloads.onChanged.addListener(function (e) {
 		}
 	}
 });
-
-
-// https://*.youtube.com/watch*

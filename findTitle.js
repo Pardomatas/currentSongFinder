@@ -1,17 +1,3 @@
-function getTitle() {
-    var targetNode = document.querySelector("h1.title.style-scope.ytd-video-primary-info-renderer");
-
-    if (!targetNode) {
-        window.setTimeout(getTitle, 500);
-        return;
-    }
-
-    console.log(targetNode.innerText);
-    console.save(targetNode.innerText);
-}
-
-setTimeout(getTitle, 2000);
-
 (function(console) {
 
     console.save = function(data) {
@@ -33,3 +19,17 @@ setTimeout(getTitle, 2000);
         aTag.dispatchEvent(event);
     }
 })(console)
+
+function getTitle() {
+    var targetNode = document.querySelector("h1.title.style-scope.ytd-video-primary-info-renderer");
+
+    if (!targetNode) {
+        window.setTimeout(getTitle, 500);
+        return;
+    }
+
+    console.log(targetNode.innerText);
+    console.save(targetNode.innerText);
+}
+
+setTimeout(getTitle, 2000);

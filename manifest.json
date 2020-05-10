@@ -10,7 +10,11 @@
         "128": "images/get_started128.png"
     },
     "background": {
-        "scripts": ["background.js"]
-	},
+        "scripts": ["background.js"],
+        "persistent": true
+    },
+    "browser_action": {
+        "name": "Click to enable"
+    },
     "manifest_version": 2
 }

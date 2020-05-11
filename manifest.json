@@ -14,7 +14,7 @@
         "persistent": true
     },
     "browser_action": {
-        "name": "Click to enable"
+        "name": "Click to Enable/Disable Find Current Youtube Song for Twitch"
     },
     "manifest_version": 2
 }

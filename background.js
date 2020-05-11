@@ -1,23 +1,49 @@
-// To set 
-chrome.storage.local.set({'isEnabled':false});
-
-function click(e) {
-	// To get
-	chrome.storage.local.get('isEnabled', function(data){
-		console.log(data.isEnabled); 
-		
-		let isEnabled = data.isEnabled;
-
-		if(isEnabled) {
-			chrome.browserAction.setBadgeText({text: "Off"});
-		} else if(!isEnabled) {
-			chrome.browserAction.setBadgeText({text: "ON"});
-		}
-		isEnabled = !isEnabled;
-		chrome.storage.local.set({'isEnabled':isEnabled});
-	})
+function isEnabled() {
+    return new Promise((resolve) => {
+        chrome.storage.local.get('enabled', function (data) {
+        	resolve(data);
+        });
+    });
 }
 
+//TODO consolidate next 2 methods?
+async function switchTitleFinder() {
+	var data = await isEnabled();
+	let enabled = data.enabled;
+
+	if(enabled === false) {
+		chrome.browserAction.setBadgeText({text: "ON"});
+		chrome.browserAction.setTitle({
+			title:'Click to Disable Find Current Youtube Song for Twitch.'
+		});
+		enabled = true;
+	} else {
+		chrome.browserAction.setBadgeText({text: "OFF"});
+		chrome.browserAction.setTitle({
+			title:'Click to Enable Find Current Youtube Song for Twitch.'
+		});
+		enabled = false;
+	}
+
+	chrome.storage.local.set({'enabled':enabled});
+}
+
+async function checkOnStart() {
+	var data = await isEnabled();
+	let enabled = data.enabled;
+
+	if(enabled === false || enabled === null) {
+		chrome.browserAction.setBadgeText({text: "OFF"});
+		chrome.browserAction.setTitle({
+			title:'Click to Enable Find Current Youtube Song for Twitch.'
+		});
+	} else {
+		chrome.browserAction.setBadgeText({text: "ON"});
+		chrome.browserAction.setTitle({
+			title:'Click to Disable Find Current Youtube Song for Twitch.'
+		});
+	}
+}
 
 function clearDownloads() {
 	setTimeout(function() {
@@ -30,9 +56,9 @@ chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
 });
 	
 chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {	
-	chrome.storage.local.get('isEnabled', function(data){
+	chrome.storage.local.get('enabled', function(data){
 
-		if(data.isEnabled) {
+		if(data.enabled) {
 
 			if(details.frameId === 0) {
 				// Fires only when details.url === currentTab.url
@@ -47,9 +73,9 @@ chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
 });
 	
 chrome.downloads.onChanged.addListener(function (event) {
-	chrome.storage.local.get('isEnabled', function(data){
-		
-		if(data.isEnabled) {
+	chrome.storage.local.get('enabled', function(data){
+
+		if(data.enabled) {
 
 			if (typeof event.state !== "undefined") {
 				if (event.state.current === "complete") {
@@ -61,4 +87,5 @@ chrome.downloads.onChanged.addListener(function (event) {
 	})
 });
 
-chrome.browserAction.onClicked.addListener(click);
+checkOnStart();
+chrome.browserAction.onClicked.addListener(switchTitleFinder);

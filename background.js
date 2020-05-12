@@ -1,3 +1,17 @@
+function enable() {
+	chrome.browserAction.setBadgeText({text: "ON"});
+		chrome.browserAction.setTitle({
+			title:'Click to Disable Find Current Youtube Song for Twitch.'
+		});
+}
+
+function disable() {
+	chrome.browserAction.setBadgeText({text: "OFF"});
+		chrome.browserAction.setTitle({
+			title:'Click to Enable Find Current Youtube Song for Twitch.'
+		});
+}
+
 function isEnabled() {
     return new Promise((resolve) => {
         chrome.storage.local.get('enabled', function (data) {
@@ -6,22 +20,15 @@ function isEnabled() {
     });
 }
 
-//TODO consolidate next 2 methods?
 async function switchTitleFinder() {
 	var data = await isEnabled();
 	let enabled = data.enabled;
 
 	if(enabled === false) {
-		chrome.browserAction.setBadgeText({text: "ON"});
-		chrome.browserAction.setTitle({
-			title:'Click to Disable Find Current Youtube Song for Twitch.'
-		});
+		enable();
 		enabled = true;
 	} else {
-		chrome.browserAction.setBadgeText({text: "OFF"});
-		chrome.browserAction.setTitle({
-			title:'Click to Enable Find Current Youtube Song for Twitch.'
-		});
+		disable();
 		enabled = false;
 	}
 
@@ -33,15 +40,9 @@ async function checkOnStart() {
 	let enabled = data.enabled;
 
 	if(enabled === false || enabled === null) {
-		chrome.browserAction.setBadgeText({text: "OFF"});
-		chrome.browserAction.setTitle({
-			title:'Click to Enable Find Current Youtube Song for Twitch.'
-		});
+		disable();
 	} else {
-		chrome.browserAction.setBadgeText({text: "ON"});
-		chrome.browserAction.setTitle({
-			title:'Click to Disable Find Current Youtube Song for Twitch.'
-		});
+		enable();
 	}
 }
 
@@ -57,9 +58,7 @@ chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
 	
 chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {	
 	chrome.storage.local.get('enabled', function(data){
-
 		if(data.enabled) {
-
 			if(details.frameId === 0) {
 				// Fires only when details.url === currentTab.url
 				chrome.tabs.get(details.tabId, function(tab) {
@@ -74,16 +73,13 @@ chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
 	
 chrome.downloads.onChanged.addListener(function (event) {
 	chrome.storage.local.get('enabled', function(data){
-
 		if(data.enabled) {
-
 			if (typeof event.state !== "undefined") {
 				if (event.state.current === "complete") {
 					clearDownloads();
 				}
 			}
 		}
-
 	})
 });
 

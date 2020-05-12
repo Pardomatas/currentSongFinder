@@ -60,7 +60,6 @@ chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
 	chrome.storage.local.get('enabled', function(data){
 		if(data.enabled) {
 			if(details.frameId === 0) {
-				// Fires only when details.url === currentTab.url
 				chrome.tabs.get(details.tabId, function(tab) {
 					if(tab.url === details.url) {
 						chrome.tabs.executeScript(null, {file: "findTitle.js"});
@@ -83,5 +82,6 @@ chrome.downloads.onChanged.addListener(function (event) {
 	})
 });
 
-checkOnStart();
 chrome.browserAction.onClicked.addListener(switchTitleFinder);
+
+checkOnStart();

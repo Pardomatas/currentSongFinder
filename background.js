@@ -1,15 +1,15 @@
 function enable() {
 	chrome.browserAction.setBadgeText({text: "ON"});
-		chrome.browserAction.setTitle({
-			title:'Click to Disable Find Current Youtube Song for Twitch.'
-		});
+	chrome.browserAction.setTitle({
+		title:'Click to Disable Find Current Youtube Song for Twitch.'
+	});
 }
 
 function disable() {
 	chrome.browserAction.setBadgeText({text: "OFF"});
-		chrome.browserAction.setTitle({
-			title:'Click to Enable Find Current Youtube Song for Twitch.'
-		});
+	chrome.browserAction.setTitle({
+		title:'Click to Enable Find Current Youtube Song for Twitch.'
+	});
 }
 
 function isEnabled() {

@@ -2,7 +2,7 @@
     "name": "Find Current Song",
     "version": "1.0",
     "description": "Finds currently playing song/video and creates a text file with the song title for twitch users to use with OBS",
-    "permissions": ["storage", "downloads", "activeTab", "webNavigation", "tabs", "https://*.youtube.com/watch*", "downloads", "downloads.shelf"],
+    "permissions": ["storage", "activeTab", "webNavigation", "downloads"],
     "icons": {
         "96": "images/musical-note-96.png"
     },

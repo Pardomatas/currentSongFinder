@@ -4,7 +4,10 @@
     "description": "Finds currently playing song/video and creates a text file with the song title for twitch users to use with OBS",
     "permissions": ["storage", "activeTab", "webNavigation", "downloads"],
     "icons": {
-        "96": "images/musical-note-96.png"
+        "16": "images/musical-note-16",
+        "32": "images/musical-note-32",
+        "48": "images/musical-note-48",
+        "128": "images/musical-note-128"
     },
     "background": {
         "scripts": ["background.js"],
